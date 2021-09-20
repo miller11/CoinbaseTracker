@@ -1,5 +1,6 @@
 import os
 from coinbase.wallet.client import Client
+from money import Money
 
 
 class AccountSummaryUtil:
@@ -46,9 +47,9 @@ class AccountSummaryUtil:
 
                 account_summary = {
                     'name': account.currency,
-                    'balance': float(account.native_balance.amount),
-                    'investment': total_investment,
-                    'realized_gains': float(account.native_balance.amount) - total_investment
+                    'balance': Money(account.native_balance.amount, 'USD'),
+                    'investment': Money(total_investment, 'USD'),
+                    'realized_gains': Money(account.native_balance.amount, 'USD') - Money(total_investment, 'USD')
                 }
 
                 self.account_summaries.append(account_summary)
