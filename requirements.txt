@@ -1,2 +1,4 @@
-coinbase
-money
+coinbase~=2.1.0
+money~=1.3.0
+boto3~=1.18.47
+botocore~=1.21.47
