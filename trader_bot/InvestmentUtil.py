@@ -1,4 +1,4 @@
-from util.MovingAverageUtil import MovingAverageUtil
+from MovingAverageUtil import MovingAverageUtil
 
 
 def calculate_coinbase_fee(amount: float):
@@ -18,11 +18,11 @@ class InvestmentUtil:
     MARGIN_PERCENTAGE = .015
     TIME_PERIOD = "14d"
 
-    def __init__(self, currency_type, interval, short_term_periods, long_term_periods):
+    def __init__(self, currency_pair, interval, short_term_periods, long_term_periods):
         self._decision = ''
         self._reason = ''
         self._margin = 0
-        self.currency_type = currency_type
+        self.currency_pair = currency_pair
         self.interval = interval
         self.short_term_periods = short_term_periods
         self.long_term_periods = long_term_periods
@@ -81,11 +81,11 @@ class InvestmentUtil:
             return False
 
     def short_term_average(self):
-        return MovingAverageUtil(self.currency_type).get_moving_average(self.TIME_PERIOD, self.interval,
+        return MovingAverageUtil(self.currency_pair).get_moving_average(self.TIME_PERIOD, self.interval,
                                                                         self.short_term_periods)
 
     def long_term_average(self):
-        return MovingAverageUtil(self.currency_type).get_moving_average(self.TIME_PERIOD, self.interval,
+        return MovingAverageUtil(self.currency_pair).get_moving_average(self.TIME_PERIOD, self.interval,
                                                                         self.long_term_periods)
 
     def get_decision(self):

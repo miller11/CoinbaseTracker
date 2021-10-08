@@ -46,7 +46,7 @@ class AccountSummaryUtil:
                     total_investment += float(transaction.native_amount.amount)
 
                 account_summary = {
-                    'name': account.currency,
+                    'name': account.currency_pair,
                     'balance': Money(account.native_balance.amount, 'USD'),
                     'investment': Money(total_investment, 'USD'),
                     'realized_gains': Money(account.native_balance.amount, 'USD') - Money(total_investment, 'USD')
