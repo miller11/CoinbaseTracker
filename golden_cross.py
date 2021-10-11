@@ -7,7 +7,7 @@ import plotly.graph_objs as go
 
 if __name__ == '__main__':
     # Importing market data
-    data = yf.download(tickers='BTC-USD', period='8d', interval='30m')
+    data = yf.download(tickers='SOL1-USD', period='8d', interval='30m')
 
     # Adding Moving average calculated field
     data['MA5'] = data['Close'].rolling(5).mean()

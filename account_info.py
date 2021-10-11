@@ -1,5 +1,5 @@
 import os
-from util.AccountSummaryUtil import AccountSummaryUtil
+from accounts.AccountSummaryUtil import AccountSummaryUtil
 
 if __name__ == '__main__':
     summary_util = AccountSummaryUtil()
