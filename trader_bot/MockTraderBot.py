@@ -35,7 +35,7 @@ class MockTraderBot(TraderBot):
         else:
             # if buy look at buy price, and look up current price
             buy_price = self.last_transaction['currency_value']
-            cur_price = self._get_buy_price()
+            cur_price = self.get_buy_price()
 
             # determine multiplier (cur_price - buy_price) / buy_price) * 100
             multiplier = ((cur_price - buy_price) / buy_price)

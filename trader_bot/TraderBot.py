@@ -127,7 +127,7 @@ class TraderBot:
         if operation == 'SELL':
             transaction['currency_value'] = self._get_sell_price()
         else:
-            transaction['currency_value'] = self._get_buy_price()
+            transaction['currency_value'] = self.get_buy_price()
 
         response = table.put_item(
             Item=transaction
@@ -152,7 +152,7 @@ class TraderBot:
 
         return client.get_account(account_id=self.config.account_id)
 
-    def _get_buy_price(self):
+    def get_buy_price(self):
         client = self._get_cb_client()
 
         currency_pair = self.currency_pair
@@ -166,7 +166,13 @@ class TraderBot:
     def _get_sell_price(self):
         client = self._get_cb_client()
 
-        return client.get_sell_price(currency_pair=self.currency_pair).amount
+        currency_pair = self.currency_pair
+
+        # todo handle smarter for sol
+        if str(currency_pair).startswith("SOL"):
+            currency_pair = "SOL-USD"
+
+        return client.get_sell_price(currency_pair=currency_pair).amount
 
     def _record_decision(self, decision, reason, margin=None):
         table = get_dynamo_table('cb-bot-decision')
