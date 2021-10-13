@@ -119,6 +119,7 @@ class TraderBot:
         transaction = {
             'account_id': self.config.account_id,
             'timestamp': int(time.time()),
+            'date': time.strftime('%Y-%m-%d %H:%M:%S'),
             'operation': operation,
             'amount': str(amount),
             'currency_pair': self.currency_pair
@@ -179,6 +180,7 @@ class TraderBot:
         bot_decision = {
             'account_id': self.config.account_id,
             'timestamp': int(time.time()),
+            'date': time.strftime('%Y-%m-%d %H:%M:%S'),
             'decision': decision,
             'reason': reason
         }
