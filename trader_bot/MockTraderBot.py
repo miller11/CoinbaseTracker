@@ -11,9 +11,9 @@ class MockTraderBot(TraderBot):
         # self.last_transaction = self.__get_last_transaction()  # Get last transaction
 
     def setup(self):
+        self.last_transaction = self._get_last_transaction()  # Get last transaction
         self.account = self._get_account()
         self.currency_pair = self.account['currency'] + '-USD'
-        self.last_transaction = self._get_last_transaction()  # Get last transaction
 
         return self
 
@@ -29,6 +29,8 @@ class MockTraderBot(TraderBot):
 
         account = response['Items'][0]
 
+        self.currency_pair = account['currency'] + '-USD'
+
         # if sell set balance to zero
         if self.last_transaction is None or self.last_transaction['operation'] == 'SELL':
             account['native_balance'] = {'amount': 0}
@@ -38,10 +40,10 @@ class MockTraderBot(TraderBot):
             cur_price = self.get_buy_price()
 
             # determine multiplier (cur_price - buy_price) / buy_price) * 100
-            multiplier = ((cur_price - buy_price) / buy_price)
+            multiplier = ((float(cur_price) - float(buy_price)) / float(buy_price))
 
             # determine balance buy taking buy amount * multiplier
-            buy_amount = self.last_transaction['amount']
-            account['native_balance'] = {'amount': (buy_amount * multiplier)}
+            buy_amount = float(self.last_transaction['amount'])
+            account['native_balance'] = {'amount': (buy_amount + (buy_amount * multiplier))}
 
         return account

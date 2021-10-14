@@ -64,7 +64,7 @@ class TraderBot:
                 if investment_util.should_sell(buy_amount=float(self.last_transaction['amount']),
                                                sell_amount=float(self.account['native_balance']['amount'])):
                     self._record_decision(investment_util.get_decision(), investment_util.get_reason(),
-                                           investment_util.get_margin())
+                                          investment_util.get_margin())
                     self._put_transaction(investment_util.get_decision(), self.account['native_balance']['amount'])
                     print('Account is currently invested and bot has determined a SELL')
                 else:
@@ -75,8 +75,8 @@ class TraderBot:
                 if investment_util.should_buy():
                     self._record_decision(investment_util.get_decision(), investment_util.get_reason())
                     self._put_transaction(investment_util.get_decision(),
-                                           self.last_transaction['amount'] - calculate_coinbase_fee(
-                                               self.last_transaction['amount']))
+                                          self.last_transaction['amount'] - calculate_coinbase_fee(
+                                              self.last_transaction['amount']))
 
                     print('Account is not currently invested and bot has determined a BUY')
                 else:
@@ -88,15 +88,15 @@ class TraderBot:
             short_term_average = investment_util.short_term_average()
             if short_term_average < (long_term_average - (long_term_average * .015)):
                 self._record_decision('BUY',
-                                       f'Short term average is below the long term average + 1.5%. '
-                                       f'SMA: {short_term_average}. LMA: {long_term_average}. ')
+                                      f'Short term average is below the long term average + 1.5%. '
+                                      f'SMA: {short_term_average}. LMA: {long_term_average}. ')
                 self._put_transaction('BUY', self.config.default_buy - calculate_coinbase_fee(self.config.default_buy))
                 print('Account has no previous transactions. Bot has determined a BUY')
             else:
                 # Else hold until better market conditions
                 self._record_decision('HOLD',
-                                       f'Short term average is NOT below the long term average + 1.5%. '
-                                       f'SMA: {short_term_average}. LMA: {long_term_average}. ')
+                                      f'Short term average is NOT below the long term average + 1.5%. '
+                                      f'SMA: {short_term_average}. LMA: {long_term_average}. ')
                 print('HOLD')
 
     def _get_last_transaction(self):

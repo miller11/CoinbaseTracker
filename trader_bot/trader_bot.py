@@ -1,5 +1,6 @@
 from TraderBot import TraderBotConfig, TraderBot
 from MockTraderBot import MockTraderBot
+from TestingTraderBot import TestingTraderBot
 
 if __name__ == '__main__':
     # ETH account
@@ -13,6 +14,6 @@ if __name__ == '__main__':
 
     # TraderBot(bot_config).execute_actions()
 
-    trader_bot = MockTraderBot(bot_config).setup()
+    trader_bot = TestingTraderBot(bot_config).setup()
 
-    trader_bot.get_buy_price()
+    trader_bot.execute_actions()
