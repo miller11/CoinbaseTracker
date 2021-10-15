@@ -13,8 +13,8 @@ class GraphUtil:
     def show_figure(self):
         self.fig.show()
 
-    def write_html(self):
-        self.fig.write_html("plot.html")
+    def get_html(self):
+        return self.fig.to_html(include_plotlyjs=False, full_html=False)
 
     def add_account_buy(self, datetime):
         self.fig.add_vline(x=datetime, line_dash="dash")
@@ -43,4 +43,3 @@ class GraphUtil:
 
         # Updating X axis and graph
         self.fig.update_xaxes(rangeslider_visible=True)
-
