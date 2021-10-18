@@ -2,6 +2,8 @@ from MovingAverageUtil import MovingAverageUtil
 
 
 def calculate_coinbase_fee(amount: float):
+    amount = float(amount)
+
     if amount <= 10.99:
         return .99
     elif amount <= 26.49:

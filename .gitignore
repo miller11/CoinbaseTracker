@@ -5,3 +5,4 @@ accounts/__pycache__/
 bot/__pycache__/
 trader_bot/__pycache__/
 trade_tracker/__pycache__/
+.DS_Store

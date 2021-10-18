@@ -75,7 +75,7 @@ class TraderBot:
                 if investment_util.should_buy():
                     self._record_decision(investment_util.get_decision(), investment_util.get_reason())
                     self._put_transaction(investment_util.get_decision(),
-                                          self.last_transaction['amount'] - calculate_coinbase_fee(
+                                          float(self.last_transaction['amount']) - calculate_coinbase_fee(
                                               self.last_transaction['amount']))
 
                     print('Account is not currently invested and bot has determined a BUY')
