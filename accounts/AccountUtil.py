@@ -1,6 +1,25 @@
 import os
 from coinbase.wallet.client import Client
+import boto3
 from money import Money
+
+
+def get_cb_client():
+    return Client(os.getenv('API_KEY'), os.getenv('API_SECRET'))
+
+
+def get_dynamo_table(table_name):
+    if 'AWS_KEY_ID' in os.environ:
+        session = boto3.Session(
+            aws_access_key_id=os.getenv('AWS_KEY_ID'),
+            aws_secret_access_key=os.getenv('AWS_KEY_SECRET'))
+    else:
+        session = boto3.Session()
+
+    dynamodb = session.resource('dynamodb', region_name='us-east-1')
+
+    return dynamodb.Table(table_name)
+
 
 
 class AccountSummaryUtil:
@@ -25,8 +44,8 @@ class AccountSummaryUtil:
         return sum([i['balance'] for i in self.account_summaries])
 
     def init_summaries(self):
-        client = Client(os.getenv('API_KEY'), os.getenv('API_SECRET'))
-        self.accounts = client.get_accounts(limit=50).data
+        client = get_cb_client()
+        self.accounts = AccountUtil.get_accounts()
 
         for account in self.accounts:
             all_transactions = []
@@ -46,10 +65,26 @@ class AccountSummaryUtil:
                     total_investment += float(transaction.native_amount.amount)
 
                 account_summary = {
-                    'name': account.currency_pair,
+                    'name': account.currency,
                     'balance': Money(account.native_balance.amount, 'USD'),
                     'investment': Money(total_investment, 'USD'),
                     'realized_gains': Money(account.native_balance.amount, 'USD') - Money(total_investment, 'USD')
                 }
 
                 self.account_summaries.append(account_summary)
+
+
+class AccountUtil:
+    @staticmethod
+    def get_accounts():
+        return get_cb_client().get_accounts(limit=50).data
+
+
+class MockAccountUtil:
+    @staticmethod
+    def get_accounts():
+        table = get_dynamo_table('cb-mock-account')
+        response = table.scan()
+
+        return response['Items']
+

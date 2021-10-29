@@ -88,6 +88,6 @@ if __name__ == '__main__':
         figure.add_account_sell(str(sell['timestamp']))
 
     # Show the graph figure
-    print(figure.get_html())
+    print(figure.get_json())
     # figure.show_figure()
     # figure.write_html()

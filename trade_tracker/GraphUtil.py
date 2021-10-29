@@ -16,6 +16,9 @@ class GraphUtil:
     def get_html(self):
         return self.fig.to_html(include_plotlyjs=False, full_html=False)
 
+    def get_json(self):
+        return self.fig.to_json()
+
     def add_account_buy(self, datetime):
         self.fig.add_vline(x=datetime, line_dash="dash")
 

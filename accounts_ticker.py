@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from botocore.config import Config
-from accounts.AccountSummaryUtil import AccountSummaryUtil
+from accounts.AccountUtil import AccountSummaryUtil
 import boto3
 import time
 
