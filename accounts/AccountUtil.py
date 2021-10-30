@@ -77,6 +77,7 @@ class AccountSummaryUtil:
 class AccountUtil:
     @staticmethod
     def get_accounts():
+        # todo filter out accounts without a 'created' date
         return get_cb_client().get_accounts(limit=50).data
 
 
