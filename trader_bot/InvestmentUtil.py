@@ -1,4 +1,4 @@
-from MovingAverageUtil import MovingAverageUtil
+from .MovingAverageUtil import MovingAverageUtil
 
 
 def calculate_coinbase_fee(amount: float):

@@ -5,3 +5,4 @@ botocore~=1.21.47
 yfinance
 plotly~=4.12
 pytz
+pytest

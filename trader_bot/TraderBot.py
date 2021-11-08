@@ -8,16 +8,32 @@ from InvestmentUtil import InvestmentUtil, calculate_coinbase_fee
 from dataclasses import dataclass
 
 
+def get_cb_client():
+    ssm = get_aws_session().client('ssm', region_name='us-east-1')
+    api_key = ssm.get_parameter(
+        Name='/ic-miller/realized-coinbase/coinbase/api-key',
+        WithDecryption=True)['Parameter']['Value']
+    api_secret = ssm.get_parameter(
+        Name='/ic-miller/realized-coinbase/coinbase/api-secret',
+        WithDecryption=True)['Parameter']['Value']
+
+    return Client(api_key, api_secret)
+
+
 @dataclass
 class TraderBotConfig:
     def __init__(self, json_string):
         self.__dict__ = json.loads(json_string)
 
     account_id: str
+    currency: str
     default_buy: float = 100
     interval: str = '30m'
     short_term_periods: int = 5
     long_term_periods: int = 20
+
+    def get_currency_pair(self):
+        return self.currency + '-USD'
 
 
 def get_aws_session():
@@ -136,25 +152,13 @@ class TraderBot:
 
         return response
 
-    @staticmethod
-    def _get_cb_client():
-        ssm = get_aws_session().client('ssm', region_name='us-east-1')
-        api_key = ssm.get_parameter(
-            Name='/ic-miller/realized-coinbase/coinbase/api-key',
-            WithDecryption=True)['Parameter']['Value']
-        api_secret = ssm.get_parameter(
-            Name='/ic-miller/realized-coinbase/coinbase/api-secret',
-            WithDecryption=True)['Parameter']['Value']
-
-        return Client(api_key, api_secret)
-
     def _get_account(self):
-        client = self._get_cb_client()
+        client = get_cb_client()
 
         return client.get_account(account_id=self.config.account_id)
 
     def get_buy_price(self):
-        client = self._get_cb_client()
+        client = get_cb_client()
 
         currency_pair = self.currency_pair
 
@@ -165,7 +169,7 @@ class TraderBot:
         return client.get_buy_price(currency_pair=currency_pair).amount
 
     def _get_sell_price(self):
-        client = self._get_cb_client()
+        client = get_cb_client()
 
         currency_pair = self.currency_pair
 

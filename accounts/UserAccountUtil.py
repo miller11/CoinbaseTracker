@@ -23,18 +23,19 @@ def check_user_account(user_id, account_id):
     has_match = False
 
     for account in accounts:
-        if account['id'] == account_id:
-            has_match = True
+        if account.created_at is not None:
+            if account['id'] == account_id:
+                has_match = True
 
-        if not any(cached_account['account_id'] == account_id for cached_account in cached_accounts):
-            cached_account = {
-                'user_id': user_id,
-                'account_id': account['id'],
-                'timestamp': int(time.time()),
-            }
+            if not any(cached_account['account_id'] == account_id for cached_account in cached_accounts):
+                cached_account = {
+                    'user_id': user_id,
+                    'account_id': account['id'],
+                    'timestamp': int(time.time()),
+                }
 
-            table.put_item(
-                Item=cached_account
-            )
+                table.put_item(
+                    Item=cached_account
+                )
 
     return has_match

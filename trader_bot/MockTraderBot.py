@@ -1,10 +1,12 @@
 from boto3.dynamodb.conditions import Key
-from TraderBot import TraderBotConfig, TraderBot, get_dynamo_table
+from TraderBot import TraderBotConfig, get_dynamo_table
+from TraderBot2 import TraderBot2
+from InvestmentUtil import InvestmentUtil
 
 
-class MockTraderBot(TraderBot):
-    def __init__(self, config: TraderBotConfig):
-        super().__init__(config)
+class MockTraderBot(TraderBot2):
+    def __init__(self, config: TraderBotConfig, investment_util: InvestmentUtil):
+        super().__init__(config, investment_util)
         # self.config = config
         # self.account = self.__get_account()  # Fetch the account from CB
         # self.currency_pair = self.account['currency'] + '-USD'
