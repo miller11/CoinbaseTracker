@@ -1,4 +1,4 @@
-from TraderBot import TraderBotConfig, TraderBot
+from trader_bot.TraderBot import TraderBotConfig
 from MockTraderBot import MockTraderBot
 from TestingTraderBot import TestingTraderBot
 from InvestmentUtil import InvestmentUtil

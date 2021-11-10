@@ -1,10 +1,10 @@
 from boto3.dynamodb.conditions import Key
-from TraderBot import TraderBotConfig, get_dynamo_table
-from TraderBot2 import TraderBot2
-from InvestmentUtil import InvestmentUtil
+from trader_bot.TraderBot import TraderBotConfig, get_dynamo_table
+from .TraderBot import TraderBot
+from .InvestmentUtil import InvestmentUtil
 
 
-class MockTraderBot(TraderBot2):
+class MockTraderBot(TraderBot):
     def __init__(self, config: TraderBotConfig, investment_util: InvestmentUtil):
         super().__init__(config, investment_util)
         # self.config = config
